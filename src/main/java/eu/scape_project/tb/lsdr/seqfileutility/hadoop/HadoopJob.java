@@ -181,7 +181,9 @@ public class HadoopJob implements Tool {
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
             TextInputFormat.addInputPath(job, new Path(hdfsInputDir));
 
-            String hdfsOutputDir = "output/" + System.currentTimeMillis() + "sfu/";
+            // todo: support absolute paths
+            String hdfsOutputDir = pc.getOutputDirectory() != null ?
+                    pc.getOutputDirectory() : "output/" + System.currentTimeMillis() + "sfu/";
             
             SequenceFileOutputFormat.setOutputPath(job, new Path(hdfsOutputDir));
             SequenceFileOutputFormat.setOutputCompressionType(job,
@@ -192,8 +194,9 @@ public class HadoopJob implements Tool {
                     + "part-r-00000"));
             if (success == 0 && seqFileExists) {
                 logger.info("Sequence file created: \""
-                        + hdfs.getHomeDirectory() + "/"
-                        + hdfsOutputDir + "part-r-00000" + "\"");
+                        //+ hdfs.getHomeDirectory() + "/"
+                        + new Path(hdfsOutputDir).toString()
+                        + "/part-r-00000" + "\"");
                 pc.setOutputDirectory(hdfsOutputDir);
                 return 0;
             } else {

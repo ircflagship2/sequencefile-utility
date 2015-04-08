@@ -50,6 +50,10 @@ public class Options {
             + "HDFS input path where the text files containing input paths is "
             + "available. If this parameter is provided, the -d parameter is "
             + "not required (Optional)";
+    public static final String HDFSOUTPUTPATH_FLG = "o";
+    public static final String HDFSOUTPUTPATH_OPT = "output";
+    public static final String HDFSOUTPUTPATH_OPT_DESC = "Hadoop map mode only: "
+            + "(HDFS??) output path to write sequence file(s??) to (optional)";
     public static final String HADOOPJOBNAME_FLG = "n";
     public static final String HADOOPJOBNAME_OPT = "name";
     public static final String HADOOPJOBNAME_OPT_DESC = "Hadoop map mode only: "
@@ -98,6 +102,7 @@ public class Options {
         OPTIONS.addOption(HELP_FLG, HELP_OPT, false, HELP_OPT_DESC);
         OPTIONS.addOption(HADOOPMAPMODE_FLG, HADOOPMAPMODE_OPT, false, HADOOPMAPMODE_OPT_DESC);
         OPTIONS.addOption(HDFSINPUTPATH_FLG, HDFSINPUTPATH_OPT, true, HDFSINPUTPATH_OPT_DESC);
+        OPTIONS.addOption(HDFSOUTPUTPATH_FLG, HDFSOUTPUTPATH_OPT, true, HDFSOUTPUTPATH_OPT_DESC);
         OPTIONS.addOption(HADOOPJOBNAME_FLG, HADOOPJOBNAME_OPT, true, HADOOPJOBNAME_OPT_DESC);
         OPTIONS.addOption(DIR_FLG, DIR_OPT, true, DIR_OPT_DESC);
         OPTIONS.addOption(EXT_FLG_FLG, EXT_FLG_OPT, true, EXT_FLG_OPT_DESC);
@@ -109,6 +114,7 @@ public class Options {
 
         String dirStr;
         String pathStr;
+        String outputPathStr;
         String jobName;
         String seqFileStr;
         String extStr;
@@ -160,6 +166,13 @@ public class Options {
             jobName = cmd.getOptionValue(HADOOPJOBNAME_OPT);
             pc.setHadoopJobName(jobName);
             logger.info("Hadoop job name: " + jobName);
+        }
+
+        // output dirs
+        if (cmd.hasOption(HDFSOUTPUTPATH_OPT) && cmd.getOptionValue(HDFSOUTPUTPATH_OPT) != null) {
+            outputPathStr = cmd.getOptionValue(HDFSOUTPUTPATH_OPT);
+            pc.setOutputDirectory(outputPathStr);
+            logger.info("HDFS output path:: " + outputPathStr);
         }
 
         // compression
