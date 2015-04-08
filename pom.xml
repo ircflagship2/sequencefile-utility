@@ -3,10 +3,10 @@
     
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>eu.scape_project.tb</groupId>
+    <groupId>edu.ucl.ircflagship2</groupId>
     <artifactId>sequencefile-utility</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>sequencefile-utility</name>
     
     <distributionManagement>
