@@ -40,10 +40,14 @@ public class SmallFilesSequenceFileMapper
             length = keyFile.length();
             buffer = FileUtils.readFileToByteArray(keyFile.getAbsolutePath());
             if (buffer != null) {
-                outvalue.set(buffer, 0, (int) length);
-                context.write(outkey, outvalue);
+                try {
+                    outvalue.set(buffer, 0, (int) length);
+                    context.write(outkey, outvalue);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new IOException("Unable to write file " + keyPath + " as BytesWritable from mapper", e);
+                }
             } else {
-                throw new IOException("Unable to read file in buffer!");
+                throw new IOException("Unable to read file " + keyPath + " in buffer!");
             }
         }
     }
