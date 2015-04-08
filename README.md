@@ -45,6 +45,8 @@ Usage
       separate thread. (Optional)
 * `-n,--name <arg>`    
     * Hadoop map mode: Hadoop job name (Optional)
+* `-o,--output <path>`
+    * Output folder to write SequenceFiles to.
 * `-p,--path <arg>`    
     * Hadoop map mode: HDFS input path where the text files
       containing input paths is available. If this parameter
